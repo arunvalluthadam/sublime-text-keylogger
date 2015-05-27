@@ -1,0 +1,49 @@
+[
+	{
+		"id": "preferences",
+		"caption": "Preferences",
+		"children": 
+		[
+			{
+				"caption": "Package Settings",
+				"id": "package-settings",
+				"children":
+				[
+					{
+						"caption": "Keylogger History",
+						"children": 
+						[
+							{
+								"caption": "Settings - Default",
+								"command": "open_file",
+								"args": {
+									"file": "$packages/Log-user-action/LogUserAction.sublime-settings"
+								}
+							},
+							{
+								"caption": "Settings - User",
+								"command": "open_file",
+								"args": {
+									"file": "$packages/Log-user-action/DefaultUser.sublime-settings"
+								}
+							},
+							{ "caption": "-" },
+							{
+								"caption": "Key Bindings - Default",
+								"command": "open_file",
+								"args": {
+									"file": "$packages/Log-user-action/Default ($platform).sublime-keymap"
+								}
+							},
+							{
+								"caption": "History",
+								"command": "log_user_open",
+							}
+						]
+
+					}
+				]
+			}
+		]
+	}
+]

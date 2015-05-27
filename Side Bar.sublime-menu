@@ -1,0 +1,13 @@
+// [
+// {
+// 	"id": "logUserAction",
+// 	"caption": "LogUserAction",
+// 	"children": 
+// 	[
+// 	{
+// 		"caption": "Run",
+// 		"command": "LogUserAction"
+// 	}
+// 	]
+// }
+// ]
