@@ -61,15 +61,15 @@ class LogUserTestCommand(sublime_plugin.TextCommand):
 		self.view.insert(edit, 0, "Hello, World!")
 
 
-class LogUserKeyloggerCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		file_name = self.view.file_name()
-		# get_it = [] 
-		# if self.view.window().active_view():
-		get_it = self.view.substr(self.view.line(self.view.sel()[0].begin()))
-			# get_it.append(content)
-		# get_it = " ".join(get_it)
-		SaveFiles().key_strokes_history(file_name, get_it)
+# class LogUserKeyloggerCommand(sublime_plugin.TextCommand):
+# 	def run(self, edit):
+# 		file_name = self.view.file_name()
+# 		# get_it = [] 
+# 		# if self.view.window().active_view():
+# 		get_it = self.view.substr(self.view.line(self.view.sel()[0].begin()))
+# 			# get_it.append(content)
+# 		# get_it = " ".join(get_it)
+# 		SaveFiles().key_strokes_history(file_name, get_it)
 
 
 class LogUserOpenCommand(sublime_plugin.WindowCommand):
@@ -79,16 +79,24 @@ class LogUserOpenCommand(sublime_plugin.WindowCommand):
 
 
 class LogListener(sublime_plugin.EventListener):
+	def __init__(self):
+		self.file_name = ""
+		self.get_it = ""
+		self.lis = []
+
 	def on_new(self, view):
 		SaveFiles().new_file_history()
 
 	def on_load(self, view):
 		view.run_command("log_user_action")
 
-	# def on_pre_save(self, view):
-	# 	view.run_command("log_user_keylogger")
-
 	def on_modified(self, view):
-		# if view.window().active_view():
-		if view.substr(view.line(view.sel()[0].begin())):
-			view.run_command("log_user_keylogger")
+		self.file_name = view.file_name()
+		keylogger = view.substr(view.line(view.sel()[0].begin()))
+		self.lis.append(keylogger)
+		self.get_it = " ".join(self.lis)
+
+	def on_pre_save(self, view):
+	# 	view.run_command("log_user_keylogger")
+		SaveFiles().key_strokes_history(self.file_name, self.get_it)
+		self.lis = []
